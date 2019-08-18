@@ -1,0 +1,53 @@
+<div class="jumbotron container" align=center>
+        <h1 style="color:rgb(4, 139, 4); font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">My Cart</h1><BR>
+            <BR>
+        
+        <div *ngFor="let product of products;let i = index">
+        <table>
+            <tr>
+                <td rowspan="8"><img src="assets/8.jpg" width="250px" height="250px" alt="{{product.photo}}"/></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><b>Product:</b> {{product.productName}}</td>
+            </tr>
+            <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td><b>Brand:</b> {{product.company}}</td>
+            </tr>
+            <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td><b>Price:</b> {{product.price | currency:'INR':true}}
+                        <!-- <div>Discount Amount Here</div> -->
+                    </td>
+            </tr>
+            <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td><b>Description:</b> {{product.description}}</td>
+            </tr>
+            <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td><b>Category:</b> {{product.category}}</td>
+            </tr>
+            <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td><b>Sub-Category:</b> {{product.subcategory}}</td>
+            </tr>
+           
+            <!-- <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td><b>Release Date:</b> {{product.releaseDate}}</td>
+            </tr> -->
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td>
+                <input type="button" value="Remove from cart" name="wishlist" (click)="removeFromCart(i)" class="btn btn-dark"/><br><br>
+                
+                <!-- <input type="text" [(ngModel)]="quantity"> -->
+            </td>
+    
+           
+        </table>
+       
+        <hr>
+                </div>
+                <input type="button" value="Place Order" name="place order" (click)="placeOrder()" class="btn btn-dark"/><br><br>
+        </div>

@@ -2,11 +2,11 @@
 import {FormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent }  from './app.component';
-import { ShowComponent } from './showProduct';
+import { ShowComponent } from './ShowProduct/showProduct';
 import {HttpClientModule} from '@angular/common/http';
 import {Router, RouterModule, Routes} from '@angular/router';
-import {ShowWishlist} from './app.wishlist'
-import {ShowCart} from './app.cart'
+import {ShowWishlist} from './Wishlist/app.wishlist'
+import {ShowCart} from './Cart/app.cart'
 //import { Main } from './main';
 
 const routes:Routes=[{path:'',redirectTo:'show',pathMatch:'full'},
