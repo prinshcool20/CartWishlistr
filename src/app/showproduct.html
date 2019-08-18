@@ -1,0 +1,56 @@
+<div class="jumbotron container" align=center>
+<h1 style="color:rgb(4, 139, 4); font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">PRODUCT DETAILS</h1><BR>
+    <BR>
+
+
+<table>
+    <tr>
+        <td rowspan="8"><img src="assets/8.jpg" width="250px" height="250px" alt="{{product.photo}}"/></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><h3>{{product.productName}}</h3></td>
+    </tr>
+    <tr>
+                
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td><b>Brand:</b> {{product.company}}</td>
+    </tr>
+    <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td><b>Price:</b> {{product.price | currency:'INR':true}}
+                <!-- <div>Discount Amount Here</div> -->
+            </td>
+    </tr>
+    <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td><b>Description:</b> {{product.description}}</td>
+    </tr>
+    <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td><b>Category:</b> {{product.category}}</td>
+    </tr>
+    <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td><b>Sub-Category:</b> {{product.subcategory}}</td>
+    </tr>
+    <!-- <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td><b>Release Date:</b> {{product.releaseDate}}</td>
+    </tr> -->
+    <tr>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td></td>
+    </tr>
+    <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>
+            <input type="button" value="Add to Cart" name="cart" (click)="addToCart()" class="btn btn-dark"/>&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" value="Add to Wishlist" name="wishlist" (click)="addToWishlist()" class="btn btn-dark"/><br><br>
+            <input type="button" value="Display Wishlist" name="displaywishlist" (click)="showWishlist()" class="btn btn-dark"/>&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" value="Display Cart" name="displaycart" (click)="showCart()" class="btn btn-dark"/>
+            
+        </td>
+    </tr>
+</table>
+
+</div>
+
