@@ -7,18 +7,21 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import com.cg.bean.Cart;
+import com.cg.bean.Discount;
 import com.cg.bean.Product;
 import com.cg.bean.User1;
 import com.cg.bean.Wishlist;
 import com.cg.dao.CartRepo;
-
+import com.cg.dao.DiscountDAO;
 import com.cg.dao.IProductRepo;
 import com.cg.dao.User1Repo;
 import com.cg.dao.WishlistRepo;
+
 import com.cg.exception.ApplicationException;
 import com.cg.exception.InvalidInputException;
 import com.cg.exception.ProductUnavailableException;
@@ -38,6 +41,9 @@ public class IProductServiceImpl implements IProductService{
 
 	@Autowired
 	private CartRepo cartRepo;
+	
+	@Autowired
+	private DiscountDAO discountDao;
 	
 	
 
@@ -60,16 +66,16 @@ public class IProductServiceImpl implements IProductService{
 		}
 		return productRepo.findAll();
 	}
-	@Transactional
-	public String addProduct(Product p) {
-		if(productRepo.existsById(p.getProductID())) {
-			throw new ApplicationException("Product Already Exists");
-		}
-		else {
-			productRepo.save(p);
-			return "Product Added";
-			}
-	}
+//	@Transactional
+//	public String addProduct(Product p) {
+//		if(productRepo.existsById(p.getProductID())) {
+//			throw new ApplicationException("Product Already Exists");
+//		}
+//		else {
+//			productRepo.save(p);
+//			return "Product Added";
+//			}
+//	}
 
 	@Override
 	public Product getProduct(int productID) {
@@ -88,19 +94,11 @@ public class IProductServiceImpl implements IProductService{
 			throw new ApplicationException("No Product Exists");
 		}
 	}
-	@Transactional
-	public String update(Product p) {
-		this.delete(p.getProductID());
-		this.addProduct(p);
-		return "Product Updated";
-	}
-	@Transactional
-	public String delete(int id) {
-		productRepo.delete(this.getById(id));
-		 return "Product Deleted";
-	}
 	
 	
+	
+	//wishlist.............................................
+		
 	@Override
 	public Wishlist addProductToWishlist(int userId, int productId) throws InvalidInputException {
 
@@ -159,15 +157,18 @@ public class IProductServiceImpl implements IProductService{
 		return wishlist.getProducts();
 	}
 
-
+    //cart......................................
+	
 	@Override
 	public Cart addProductToNewCart(int userId, int productId)
 			throws ProductUnavailableException {
 
 		 product = productRepo.getOne(productId);
+		 
 		  user =customerRepo.getOne(userId);
 
 		 Cart cart1= cartRepo.findByuser(user);
+		 
 		 
 		  if(cart1==null)
 		  {
@@ -177,10 +178,16 @@ public class IProductServiceImpl implements IProductService{
 		  products.add(product);
 		  System.out.println(products);
 		  cart.setUser(user);
-		  System.out.println("hhh");
+		 
 		 cart.setProducts(products);
-		 System.out.println("hello");
-		  cart.setAmount(product.getPrice());
+		 int discount = discountDao.checkDiscountOnProductById(product);
+		 if(discount==0) {
+			 cart.setAmount(product.getPrice());
+		  }else {
+			  double price=applyDiscountOnProduct(productId);
+			  cart.setAmount(price);
+		  }
+		  
 		  return cartRepo.save(cart);
 		  }
 		  else
@@ -194,15 +201,17 @@ public class IProductServiceImpl implements IProductService{
 		  System.out.println(productList);
 		  
 		  cart1.setProducts(productList);
-		 
-		  cart1.setAmount(cart1.getAmount()+product.getPrice());
-		
+		  int discount = discountDao.checkDiscountOnProductById(product);
+		  if(discount==0) {
+			  cart1.setAmount(cart1.getAmount()+product.getPrice());
+			  }else {
+				  double price=applyDiscountOnProduct(productId);
+				  cart1.setAmount(cart1.getAmount()+price);
+			  }
 		  return cartRepo.save(cart1);
 		  }
-		  
-		  
-
-	}
+		  }
+	
 	@Override
 	public List<Product> getAllProductsFromCart(int userId) throws InvalidInputException {
 		Cart cart;
@@ -226,5 +235,19 @@ public class IProductServiceImpl implements IProductService{
 		 return true;
 		}
 	
-	
+//discount.................................................	
+	@Transactional(readOnly = true)
+	public Integer checkDiscountOnProductById(Integer productId) {
+		// TODO Auto-generated method stub
+		Product product=productRepo.findById(productId).get();
+		return discountDao.checkDiscountOnProductById(product);
+	}
+
+	@Transactional(readOnly = true)
+	public Integer applyDiscountOnProduct(Integer productId) {
+		Product product=productRepo.findById(productId).get();
+		int discount = discountDao.checkDiscountOnProductById(product);
+		int price = productRepo.getProductPrice(productId);
+		return price - discount;
+	}
 	}

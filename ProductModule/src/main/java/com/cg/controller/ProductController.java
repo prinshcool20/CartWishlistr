@@ -42,11 +42,11 @@ public class ProductController {
 	}
 	
 	
-	//Add Product, Generate a Post request with body on localhost:5000/products/addProduct
-	@PostMapping(value="/addProduct",consumes={"application/json"})
-	public String addProduct(@RequestBody Product product) {
-		return service.addProduct(product);
-	}
+//	//Add Product, Generate a Post request with body on localhost:5000/products/addProduct
+//	@PostMapping(value="/addProduct",consumes={"application/json"})
+//	public String addProduct(@RequestBody Product product) {
+//		return service.addProduct(product);
+//	}
 	
 	//Display a particular Product, Generate a Get request with id as parameter on localhost:5000/products/"productId"
 	@GetMapping(value="/{id}",produces= {"application/json"})
@@ -56,17 +56,7 @@ public class ProductController {
 	}
 	
 	//Update a product information, Generate a Put request with body on localhost:5000/products/update
-	@PutMapping(value="/update",consumes= {"application/json"})
-	public String update(@RequestBody Product product) {
-		service.update(product);
-		return "Product Updated!";
-	}
-	//Delete a product, Generate a Delete request with id as parameter on localhost:5000/products/delete/"productId"
-	@DeleteMapping(value="/delete/{id}")
-	public String delete(@PathVariable int id) {
-		service.delete(id);
-		return "Product Deleted!";
-	}
+	
 	
 	@PostMapping(value= "/getWishlist",consumes= {"application/json"})
 	public List<Product> getWishlist(@RequestBody User2 user2) {
@@ -141,7 +131,15 @@ public class ProductController {
 		
 		return val;
 	}
+	@GetMapping("/check/{productId}")
+	public Integer checkDiscountOnProductById(@PathVariable Integer productId) {
+		return service.checkDiscountOnProductById(productId);
+	}
 	
+	@GetMapping("/apply/{productId}")
+	public Integer applyDiscountOnProductById(@PathVariable Integer productId) {
+		return service.applyDiscountOnProduct(productId);
+	}
 
 	
 
