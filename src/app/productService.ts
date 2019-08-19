@@ -63,7 +63,7 @@ export class ProductService{
 
     displayCart():Observable<any>{
         let object={
-            "userId":"1"
+            "userId":"2"
          }
         return this.http.post<Product>(baseUrl +"/getCart",object);
     }
@@ -76,7 +76,10 @@ export class ProductService{
             }
             return this.http.post(baseUrl +"/removeCart",object).subscribe(data=>{console.log(data)});
     }
+placeorder(order:any){
+console.log(order);
 
+}
  
 
     

@@ -34,7 +34,7 @@ export class ShowComponent {
         this.service.addWishList(this.product.productID);
        }
        addToCart(){
-           this.service.addCart(this.product.productID);
+          // this.service.addCart(this.product.productID);
        }
 
        showWishlist(){

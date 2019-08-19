@@ -27,13 +27,25 @@ export class ShowCart implements OnInit{
         window.location.reload();
     }
     placeOrder(){
-      let  order:number[]=[]
-        for(let data of this.products){
-            order.push(data.productID,this.quantity)
-        }
-        console.log(order)
-        
-    }
-   
+        let amount:any=0;
+        for(let amt of this.products){
+            amount=amount+amt.price;
+            }
+            console.log(amount);
+            
+            if(amount>1000){
+                let  order:number[]=[]
+                for(let data of this.products){
+                    order.push(data.productID)
+                }
+               
+                this.service.placeorder(order);
 
-}
+                }else{
+                alert("Cart value should be more then 10000");
+                console.log("hello");
+                
+            }
+
+        }
+   }
